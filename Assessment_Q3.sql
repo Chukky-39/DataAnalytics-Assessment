@@ -6,6 +6,7 @@ SELECT
 		MAX(last_returns_date) AS last_transaction_date,
         DATEDIFF(CURDATE(), MAX(last_returns_date)) AS inactivity_days
 	FROM adashi_staging.savings_savingsaccount AS s
+    WHERE s.last_returns_date IS NOT NULL
 	GROUP BY savings_id, owner_id
     HAVING MAX(last_returns_date) <= CURDATE() - INTERVAL 365 DAY
 	
@@ -20,6 +21,7 @@ SELECT
 		MAX(last_returns_date) AS last_transaction_date,
         DATEDIFF(CURDATE(), MAX(last_returns_date)) AS inactivity_days
 	FROM adashi_staging.plans_plan AS p
+	WHERE p.last_returns_date IS NOT NULL
 	GROUP BY id, owner_id
     HAVING MAX(last_returns_date) <= CURDATE() - INTERVAL 365 DAY
 ;
